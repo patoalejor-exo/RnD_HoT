@@ -109,13 +109,18 @@ def gen_video_kpts(video, det_dim=416, num_peroson=1, gen_output=False):
 
         bboxs, scores = yolo_det(frame, human_model, reso=det_dim, confidence=args.thred_score)
 
+        _bboxs_pre = copy.deepcopy(bboxs) 
+        _scores_pre = copy.deepcopy(scores)
+                                   
         if bboxs is None or not bboxs.any():
             print('No person detected!')
-            bboxs = bboxs_pre
-            scores = scores_pre
+            bboxs = last_bboxs
+            scores = last_scores
         else:
-            bboxs_pre = copy.deepcopy(bboxs) 
-            scores_pre = copy.deepcopy(scores) 
+            last_bboxs = _bboxs_pre
+            last_scores = _scores_pre
+            # bboxs_pre = copy.deepcopy(bboxs) 
+            # scores_pre = copy.deepcopy(scores)
 
         # Using Sort to track people
         people_track = people_sort.update(bboxs)
