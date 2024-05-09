@@ -109,18 +109,20 @@ def gen_video_kpts(video, det_dim=416, num_peroson=1, gen_output=False):
 
         bboxs, scores = yolo_det(frame, human_model, reso=det_dim, confidence=args.thred_score)
 
-        _bboxs_pre = copy.deepcopy(bboxs) 
-        _scores_pre = copy.deepcopy(scores)
+        # _bboxs_pre = copy.deepcopy(bboxs) 
+        # _scores_pre = copy.deepcopy(scores)
                                    
         if bboxs is None or not bboxs.any():
             print('No person detected!')
-            bboxs = last_bboxs
-            scores = last_scores
+            # bboxs = last_bboxs
+            # scores = last_scores
+            bboxs = bboxs_pre
+            scores = scores_pre
         else:
-            last_bboxs = _bboxs_pre
-            last_scores = _scores_pre
-            # bboxs_pre = copy.deepcopy(bboxs) 
-            # scores_pre = copy.deepcopy(scores)
+            # last_bboxs = _bboxs_pre
+            # last_scores = _scores_pre
+            bboxs_pre = copy.deepcopy(bboxs) 
+            scores_pre = copy.deepcopy(scores)
 
         # Using Sort to track people
         people_track = people_sort.update(bboxs)
@@ -166,6 +168,7 @@ def gen_video_kpts(video, det_dim=416, num_peroson=1, gen_output=False):
     keypoints = np.array(kpts_result)
     scores = np.array(scores_result)
 
+    print(f"{keypoints.shape = }")
     keypoints = keypoints.transpose(1, 0, 2, 3)  # (T, M, N, 2) --> (M, T, N, 2)
     scores = scores.transpose(1, 0, 2)  # (T, M, N) --> (M, T, N)
 
