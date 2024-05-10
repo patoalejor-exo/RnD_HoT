@@ -96,7 +96,7 @@ def show2Dpose(kps, img):
 def main():
 
     
-    all_keypoints = glob.glob('./demo/output/finn_walk*v15_cam_0*/**/input_keypoints_2d.npz', recursive=True)
+    all_keypoints = glob.glob('./demo/output/*walk*_mid/**/input_keypoints_2d.npz', recursive=True)
     print(all_keypoints)
     for path_to_keypoints in all_keypoints:
         print(f"Reading {path_to_keypoints}")
