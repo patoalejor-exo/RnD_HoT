@@ -10,7 +10,7 @@ venv_path = ".venv"
 python_executable = os.path.join(venv_path, 'Scripts', 'python.exe')
 
 def process_videos_hot():
-  all_videos = glob('./demo/video/finn_walk*v15_cam_0*.mp4')
+  all_videos = glob('./demo/video/*mid.mp4')
   print(all_videos)
 
   # Loop to run a subprocess 10 times
